@@ -29,4 +29,24 @@ const uploadOnCloudinary = async (localFilePath) => {
     }
 }
 
-export { uploadOnCloudinary }
+const removeOnCloudinary = async (cloudinaryUrl) => {
+    try {
+      console.log("URL: " + cloudinaryUrl);
+  
+      const publicIdWithExtension = cloudinaryUrl.split("/").pop();  
+      const publicId = publicIdWithExtension.split(".")[0];
+      console.log("Public ID: " + publicId);
+  
+      cloudinary.uploader.destroy(publicId, function (error, result) {
+        if (error) {
+          console.log('Error deleting image:', error);
+        } else {
+          console.log('Image deleted successfully:', result);
+        }
+      });
+    } catch (error) {
+      console.log('Error in the try-catch block:', error);
+    }
+  };
+
+export { uploadOnCloudinary, removeOnCloudinary }
